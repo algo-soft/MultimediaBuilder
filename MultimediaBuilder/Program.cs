@@ -1,75 +1,40 @@
-﻿using Engine;
-using Engine.Input;
-using Engine.UI;
+﻿using MultimediaBuilder.Graphics;
+using MultimediaBuilder;
+using MultimediaBuilder.Maths;
 
-class Prog
+class Program
 {
-    //Some values
-    static float vel;
-
-    //Declaring main vars outside because we want to use it in other methods
-    static Window window = new Window();
-    static Camera cam = new Camera(window);
-    static World main = new World();
-
     static void Main(string[] args)
     {
-        //Setting starter world and camera
-        window.SetCamera(cam);
-        window.SetActiveWorld(main);
+        //Our window
+        Window window = new Window();
 
-        //Init entity
-        Entity entity = new Entity(EntitySample.Button);
+        //Add simple object so it can be rendered
+        SimpleObject simple = new SimpleObject();
 
-        entity.transform.scale = new Vector2(10, 10);
-        entity.transform.position = new Vector2(-150, 0);
-
-        SpriteRenderer sprR = entity.GetComponent<SpriteRenderer>();
-        Sprite spr = sprR.sprite;
-        spr = new Sprite(window, new Image("C:\\Users\\user\\Desktop\\button1.png"));
+        Sprite spr = new Sprite(window, "C:\\Users\\user\\Desktop\\Buttons\\none.png");
         spr.is9Sliced = true;
+        spr.corner = new Sprite(window, "C:\\Users\\user\\Desktop\\Playerr1.png");
+        spr.side = new Sprite(window, "C:\\Users\\user\\Desktop\\Buttons\\Default\\side.png");
+        spr.center = new Sprite(window, "C:\\Users\\user\\Desktop\\Buttons\\Default\\center.png");
 
-        spr.left_bottom = new Image("C:\\Users\\user\\Desktop\\corner2.png");
-        spr.right_bottom = new Image("C:\\Users\\user\\Desktop\\corner3.png");
-        spr.left_top = new Image("C:\\Users\\user\\Desktop\\corner1.png");
-        spr.right_top = new Image("C:\\Users\\user\\Desktop\\corner4.png");
-        spr.left = new Image("C:\\Users\\user\\Desktop\\lr1.png");
-        spr.right = new Image("C:\\Users\\user\\Desktop\\lr2.png");
-        spr.bottom = new Image("C:\\Users\\user\\Desktop\\tb2.png");
-        spr.top = new Image("C:\\Users\\user\\Desktop\\tb1.png");
-        spr.center = new Image("C:\\Users\\user\\Desktop\\center.png");
+        simple.Sprite = spr;
+        simple.Transform.Scale = new MultimediaBuilder.Maths.Vector2(1, 1);
 
-        sprR.sprite = spr;
+        SimpleObject simple2 = new SimpleObject();
+        simple2.Sprite = new Sprite(window, "C:\\Users\\user\\Desktop\\Playerr1.png");
+        simple2.Transform.Position.X = 90;
 
-        entity.Init();
+        window.AddRenderable(simple);
+        window.AddRenderable(simple2);
 
-        entity.Update += EntityUpdate;
-        entity.GetComponent<Button>().OnClick += OnButtonClick;
-
-        Entity e = new Entity(EntitySample.Default);
-        e.GetComponent<SpriteRenderer>().sprite = new Sprite(window, new Image("C:\\Users\\user\\Desktop\\Playerr1.png"));
-
-        main.AddEntity(entity);
-        main.AddEntity(e);
-
-        //Run window
-        window.Init();
-
-        //Everything here wont work
+        window.StartWindow();
     }
+}
 
-    static void EntityUpdate(Entity entity)
-    {
-        Button b = entity.GetComponent<Button>();
-
-        if (b.isHolded)
-        {
-            
-        }
-    }
-
-    static void OnButtonClick(Button b)
-    {
-        
-    }
+class SimpleObject : IRenderable
+{
+    public Sprite Sprite { get; set; }
+    public Transform Transform { get; set; } = new Transform();
+    public int Order { get; set; } = 0;
 }

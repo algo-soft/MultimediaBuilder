@@ -5,19 +5,25 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Core\Graphics\Shaders\FragmentShader.glsl" />
+    <None Remove="Core\Graphics\Shaders\VertexShader.glsl" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Core\Graphics\Shaders\FragmentShader.glsl" />
+    <EmbeddedResource Include="Core\Graphics\Shaders\VertexShader.glsl" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Silk.NET.Input" Version="2.21.0" />
     <PackageReference Include="Silk.NET.OpenGL" Version="2.21.0" />
     <PackageReference Include="Silk.NET.Windowing" Version="2.21.0" />
     <PackageReference Include="StbImageSharp" Version="2.27.14" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Engine">
-      <HintPath>..\..\Engine\Engine\bin\Debug\net7.0\Engine.dll</HintPath>
-    </Reference>
+    <PackageReference Include="StbTrueTypeSharp" Version="1.26.12" />
   </ItemGroup>
 
 </Project>
